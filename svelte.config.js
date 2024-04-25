@@ -1,6 +1,8 @@
 import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
+const production = process.env.NODE_ENV === 'production';
+
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	preprocess: vitePreprocess(),
@@ -13,6 +15,14 @@ const config = {
 			precompress: false,
 			strict: true,
 		}),
+
+		paths: {
+			base: production ? '/misc-study' : '',
+		},
+
+		prerender : {
+			default : true
+		}
 	},
 
 	onwarn: (warning, handler) => {
