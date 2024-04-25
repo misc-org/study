@@ -17,12 +17,8 @@ const config = {
 		}),
 
 		paths: {
-			base: production ? '/misc-study' : '',
+			base: production ? '/misc-org/misc-study' : '',
 		},
-
-		prerender : {
-			default : true
-		}
 	},
 
 	onwarn: (warning, handler) => {

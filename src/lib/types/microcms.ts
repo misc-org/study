@@ -24,34 +24,11 @@ export type Blogs<T = "get"> = Structure<
          */
         title: string;
         /**
-         * 説明
-         */
-        description?: string;
-        /**
-         * タグ
-         */
-        tags?: (
-            | "お知らせ"
-            | "ブログ"
-            | "作品紹介"
-            | "活動報告"
-            | "1 年生"
-            | "2 年生"
-            | "3 年生"
-            | "_migrated"
-        )[];
-        /**
          * 本文
          */
         content?: any;
-        /**
-         * OGP 画像
-         */
-        ogpImg?: { url: string; width: number; height: number };
     }
 >;
-
-export type Tags = Blogs["tags"][number];
 
 export type EndPoints = {
     get: {
