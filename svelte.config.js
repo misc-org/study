@@ -17,7 +17,7 @@ const config = {
 		}),
 
 		paths: {
-			base: production ? '/misc-org/misc-study' : '',
+			base: production ? '/study' : '',
 		},
 	},
 
