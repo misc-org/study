@@ -15,7 +15,7 @@
     font-family: "M PLUS 1p", sans-serif;
 
     header {
-      background-color: #f3db00;
+      background-color: #f2df36;
       padding: 1em 5em;
       color: #1f1f1f;
 
