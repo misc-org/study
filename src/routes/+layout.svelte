@@ -4,7 +4,7 @@
 
 <main>
   <header>
-    <a href="{base}">Home</a>
+    <a href="https://misc-org.github.io/study/">Home</a>
   </header>
   <div>
     <slot />
