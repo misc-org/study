@@ -10,3 +10,5 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 dist/
+src/lib/assets/mocks/*
+!src/lib/assets/mocks/.gitkeep
