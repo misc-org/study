@@ -4,7 +4,7 @@
 
 <main>
   <header>
-    <a href="{base}/">Home</a>
+    <a href="{base}">Home</a>
   </header>
   <div>
     <slot />
