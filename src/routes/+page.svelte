@@ -8,7 +8,7 @@
 <section>
   {#each data.blogList.contents as blog}
     <article>
-      <a href="{base}/blog/{blog.id}"><h2>{blog.title}</h2></a>
+      <a href="{base}/blogs/{blog.id}"><h2>{blog.title}</h2></a>
     </article>
   {/each}
 </section>
