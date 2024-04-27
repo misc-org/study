@@ -19,10 +19,13 @@ jobs:
           node-version: 20
 
       - name: 🎉 Install project dependencies
-        run: npm i
+        run: yarn
 
       - name: 🏗️ Generate static files
-        run: npm run build
+        run: yarn build
+        env:
+          MICROCMS_SERVICE_DOMAIN: ${{ secrets.MICROCMS_SERVICE_DOMAIN }}
+          MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
 
       - name: 🚀 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
