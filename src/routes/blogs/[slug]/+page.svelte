@@ -303,6 +303,13 @@
     }
   }
   :global(h3) {
+    margin: 1em 0;
+    border-bottom: 3px solid material-color("light-blue", "lighten-5");
+
+    @media (max-width: 768px) {
+      font-size: 1em;
+    }
+
     &::before {
       content: "##";
       margin-right: 0.5em;
