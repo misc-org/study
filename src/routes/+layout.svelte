@@ -18,6 +18,10 @@
   });
 </script>
 
+<svelte:head>
+  <title>MISCTUDY</title>
+</svelte:head>
+
 <main data-theme="skeleton">
   <header style=" top: {isScrollingDown ? '-50px' : '0'}; ">
     <a href="{base}/"
