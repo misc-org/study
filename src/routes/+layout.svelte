@@ -48,6 +48,7 @@
       padding: 1em 5em;
       position: fixed;
       transition: top 0.3s;
+      z-index: 9999;
 
       a {
         color: material-color('light-blue', 'lighten-5');
@@ -70,7 +71,7 @@
 
     @media (max-width: 768px) {
       div {
-        padding: 2em;
+        padding: 1.2em;
       }
     }
   }

@@ -89,6 +89,8 @@
 <section>
   <h1>{data.detail.title}</h1>
   <div>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="overlay {isExpanded ? 'show' : ''}" on:click={closeOverlay}>
       {#if isExpanded}
         <!-- svelte-ignore a11y-missing-attribute -->
@@ -149,12 +151,12 @@
       padding: 0;
 
       h1 {
-        font-size: 1.5em;
+        font-size: 1.2em;
         padding: 0.5em;
       }
 
       span {
-        padding: 2em;
+        padding: 1.5em;
       }
     }
   }
@@ -205,6 +207,10 @@
       :global(code) {
         color: #fff;
         font-family: "M PLUS 1 Code", monospace;
+
+        @media (max-width: 768px) {
+          font-size: 0.9em;
+        }
       }
     }
   }
@@ -217,12 +223,20 @@
     :global(code) {
       color: #fff;
       font-family: "M PLUS 1 Code", monospace;
+
+      @media (max-width: 768px) {
+        font-size: 0.9em;
+      }
     }
   }
 
   :global(p) {
     line-height: 1.5em;
     margin: 2em 0;
+
+    @media (max-width: 768px) {
+      font-size: 0.9em;
+    }
 
     :global(code) {
       background-color: #1f1f1f;
@@ -231,15 +245,16 @@
       margin: 0 0.3em;
       border-radius: 0.2em;
       font-family: "M PLUS 1 Code", monospace;
+
+      @media (max-width: 768px) {
+        font-size: 0.9em;
+      }
     }
   }
 
   :global(a) {
     color: material-color("light-blue", "darken-3");
-    text-decoration: none;
-    &:hover {
-      text-decoration: underline;
-    }
+    text-decoration: underline;
   }
   :global(img) {
     max-width: 50%;
@@ -274,12 +289,14 @@
     max-height: 90%;
   }
 
-  :global(h1) {
-    font-size: 2em;
-  }
   :global(h2) {
     margin: 1em 0;
     border-bottom: 4px solid material-color("light-blue", "lighten-4");
+
+    @media (max-width: 768px) {
+      font-size: 1.2em;
+    }
+
     &::before {
       content: "#";
       margin-right: 0.5em;
@@ -300,6 +317,10 @@
 
   :global(ul > li) {
     list-style-type: unordered-list;
+
+    @media (max-width: 768px) {
+      font-size: 0.9em;
+    }
   }
 
   :global(counter-style ordered-list) {
