@@ -34,18 +34,12 @@ export async function getContentDetail<T extends keyof EndPoints["get"]>(
   key: T,
   id: string,
   queries: MicroCMSQueries = {},
+  draftKey?: string | undefined,
 ): Promise<EndPoints["get"][T]> {
-  /**
-  if (process.env.NODE_ENV === "development") {
-    switch (key) {
-      case "blogs":
-        return blogsDetail as any;
-      default:
-        throw new Error("Invalid key");
-    }
+  if (draftKey) {
+    queries.draftKey = draftKey;
   }
-  **/
-  return microcms.getListDetail<EndPoints["get"][T]>({
+  return microcms.get<EndPoints["get"][T]>({
     endpoint: key,
     contentId: id,
     queries,
