@@ -26,7 +26,7 @@ export type Blogs<T = "get"> = Structure<
         /**
          * 本文
          */
-        content?: any;
+        content?: never;
     }
 >;
 
