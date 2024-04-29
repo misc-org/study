@@ -15,14 +15,14 @@
   
 		<link href="../_app/immutable/assets/0.BUZLoMY1.css" rel="stylesheet">
 		<link href="../_app/immutable/assets/3.ztJdUjqE.css" rel="stylesheet">
-		<link rel="modulepreload" href="../_app/immutable/entry/start.BShU7lgk.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/entry.CVSvOrjV.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/start.DLwNDljH.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/entry.BY_xfVnR.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/scheduler.By2wNi7v.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/index.D93Q5J27.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/paths.DoxhghdZ.js">
-		<link rel="modulepreload" href="../_app/immutable/entry/app.D-HisjR5.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/paths.DUPEaQ8b.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/app.CCvj9-bM.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/index.DDhgErIb.js">
-		<link rel="modulepreload" href="../_app/immutable/nodes/0.BRFLlusn.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/0.Dti4QDAi.js">
 		<link rel="modulepreload" href="../_app/immutable/nodes/3.Bq-XFu_f.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/each.BDpDTx22.js">
 </head>
@@ -32,7 +32,7 @@
 			
 			<script>
 				{
-					__sveltekit_10uiaka = {
+					__sveltekit_1dgfcif = {
 						base: new URL("..", location).pathname.slice(0, -1),
 						assets: "/study"
 					};
@@ -42,8 +42,8 @@
 					const data = [null,{"type":"data","data":{detail:{id:"tvmuqy3qutv",createdAt:"2024-04-29T01:33:21.919Z",updatedAt:"2024-04-29T04:54:55.204Z",publishedAt:"2024-04-29T01:33:21.919Z",revisedAt:"2024-04-29T04:54:55.204Z",title:"さんぷる",tag:["web制作"],content:"\u003Ch2 id=\"h8d027c8ed3\">はじめに\u003C/h2>\u003Cp>こんにちは！\u003Cbr>この度、MICS では、新たなホームページを作成しました！\u003C/p>\u003Cp>元々ホームページは存在していたのですが、運用が続かなかったりうやむやになってしまい、いっそのこと一新しよう！ということでこのサイトが作成されました。\u003C/p>\u003Cp>折角情報システム部のホームページができたので、第一回となるこのブログでは、ホームページ作成に関する技術的な話をしようと思います！\u003C/p>\u003Cp>※詳しい内容は\u003Ca href=\"https://github.com/misc-org/misc-mdn.dev/tree/add/pages?tab=readme-ov-file\" target=\"_blank\" rel=\"noopener noreferrer nofollow\"> GitHub のリポジトリ \u003C/a>にもありますのでそちらもどうぞ！\u003C/p>\u003Ch2 id=\"h03726fb0df\">技術スタック\u003C/h2>\u003Cul>\u003Cli>Svelte\u003C/li>\u003Cli>SvelteKit\u003C/li>\u003Cli>TypScript\u003C/li>\u003Cli>SCSS\u003C/li>\u003Cli>microCMS\u003C/li>\u003Cli>Storybook\u003C/li>\u003C/ul>\u003Ch2 id=\"h6c9af67de8\">動的なルーティングについて\u003C/h2>\u003Cp>皆さんがご覧になる多くのブログには、記事が複数あると思います。しかし、それらを個々にページとして作成していては、たまったもんじゃありません。\u003C/p>\u003Cp>管理も複雑化したり、デザインを変えようと思ったら全てのページで変えなければいけませんからね。\u003C/p>\u003Cp>そんなときに使うのが、\u003Cstrong>動的ルーティング\u003C/strong>です。\u003C/p>\u003Cp>Svelteでは、\u003C/p>\u003Cpre>\u003Ccode>src/routes/blog/[slug]/+page.svelte\u003C/code>\u003C/pre>\u003Cp>と配置します。\u003C/p>\u003Cp>この時の\u003Ccode>[slug]\u003C/code>が動的ルーティングで重要になります。\u003C/p>\u003Cp>他のページから、\u003Ccode>blog/\u003C/code>から続くリンクを受け取った時、その値を\u003Ccode>params\u003C/code>としてページで扱うことができます。\u003C/p>\u003Cp>例えば、下記のようにすることで、記事ごとに中身を変えることができます。\u003C/p>\u003Cdiv data-filename=\"src/routes/blog/[slug]/+page.ts\">\u003Cpre>\u003Ccode class=\"language-typescript\">import { error } from &apos;@sveltejs/kit&apos;;\n\n/** @type {import(&apos;./$types&apos;).PageLoad} */\nexport function load({ params }) {\n  const res = await getContentDetail(&quot;blogs&quot;, slug);\n}\n  error(404, &apos;Not found&apos;);\n}\u003C/code>\u003C/pre>\u003C/div>\u003Cp>例えば、\u003Ccode>&lt;a herf=&quot;/blog/blog1&quot;&gt;\u003C/code>というリンクが押された時、\u003Ccode>parms\u003C/code>には\u003Ccode>blog1\u003C/code>が代入されます。\u003Cbr>こうすることによって存在しない不特定なページに対してそれぞれ内容を作ることができます。\u003C/p>\u003Cdiv data-filename=\"+page.svelte\">\u003Cpre>\u003Ccode class=\"language-typescript\">&lt;script lang=&quot;ts&quot;&gt;\n  import type { PageData } from &quot;./$types&quot;;\n  import { base } from &quot;$app/paths&quot;;\n\n  export let data: PageData;\n&lt;/script&gt;\n\n&lt;section&gt;\n  {#each data.blogList.contents as blog}\n    &lt;article&gt;\n      &lt;a href=&quot;{base}/blogs/{blog.id}&quot;&gt;&lt;h2&gt;{blog.title}&lt;/h2&gt;&lt;/a&gt;\n    &lt;/article&gt;\n  {/each}\n&lt;/section&gt;\n\n&lt;style lang=&quot;scss&quot;&gt;\n  @import &quot;svelte-materialify/src/styles/tools/colors&quot;;\n  @import &quot;svelte-materialify/src/styles/tools/elevation&quot;;\n\n  section {\n    padding: 1em 5em;\n    width: 100%;\n\n    h1 {\n      margin: 1em 0;\n      margin-bottom: 1.5em;\n      background-color: material-color(&quot;light-blue&quot;, &quot;accent-1&quot;);\n      padding: 0.5em 1em;\n      color: #1f1f1f;\n      border-radius: 0.2em;\n      font-size: 2em;\n      @include elevation(5);\n    }\n&lt;/style&gt;\u003C/code>\u003C/pre>\u003C/div>\u003Cp>\u003C/p>"}},"uses":{"params":["slug"]}}];
 
 					Promise.all([
-						import("../_app/immutable/entry/start.BShU7lgk.js"),
-						import("../_app/immutable/entry/app.D-HisjR5.js")
+						import("../_app/immutable/entry/start.DLwNDljH.js"),
+						import("../_app/immutable/entry/app.CCvj9-bM.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
 							node_ids: [0, 3],
