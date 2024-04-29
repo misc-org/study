@@ -1,7 +1,5 @@
-import adapter from "@sveltejs/adapter-static";
+import adapter from "@sveltejs/adapter-cloudflare";
 import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
-
-const production = process.env.NODE_ENV === "production";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -12,17 +10,7 @@ const config = {
   }),
 
   kit: {
-    adapter: adapter({
-      pages: "dist",
-      assets: "dist",
-      fallback: undefined,
-      precompress: false,
-      strict: true,
-    }),
-
-    paths: {
-      base: production ? "/study" : "",
-    },
+    adapter: adapter({}),
   },
 };
 
