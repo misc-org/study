@@ -1,76 +1,38 @@
 <!doctype html>
 <html lang="ja">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="../favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- reset.css ress -->
-    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@100..900&family=Noto+Sans+JP:wght@100..900&display=swap"
-      rel="stylesheet"
-    />
-    
-		<link href="../_app/immutable/assets/0.C3yaRrB3.css" rel="stylesheet">
-		<link href="../_app/immutable/assets/3.C4cMw7qG.css" rel="stylesheet">
-		<link rel="modulepreload" href="../_app/immutable/entry/start.C5NflEUK.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/entry.Da19XsTH.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/scheduler.IcpbmKUm.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/paths.Zq9Ft73U.js">
-		<link rel="modulepreload" href="../_app/immutable/entry/app.CTZxpuBw.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/index.BshIUs1Q.js">
-		<link rel="modulepreload" href="../_app/immutable/nodes/0.DMuco68R.js">
-		<link rel="modulepreload" href="../_app/immutable/nodes/3.CdS_LJMf.js">
-  </head>
 
-  <body data-sveltekit-preload-data="hover">
-    <div style="display: contents">  <main class="svelte-1gbv4yu"><header style="top: 0;" class="svelte-1gbv4yu"><a href="../" class="svelte-1gbv4yu"></a></header> <div class="svelte-1gbv4yu"><section class="svelte-vy9yv2"><h1 class="svelte-vy9yv2">さんぷる</h1> <div class="svelte-vy9yv2"><div class="overlay  svelte-vy9yv2"></div> <span><!-- HTML_TAG_START --><h2 id="h8d027c8ed3">はじめに</h2><p>こんにちは！<br>この度、MICS では、新たなホームページを作成しました！</p><p>元々ホームページは存在していたのですが、運用が続かなかったりうやむやになってしまい、いっそのこと一新しよう！ということでこのサイトが作成されました。</p><p>折角情報システム部のホームページができたので、第一回となるこのブログでは、ホームページ作成に関する技術的な話をしようと思います！</p><p>※詳しい内容は<a href="https://github.com/misc-org/misc-mdn.dev/tree/add/pages?tab=readme-ov-file" target="_blank" rel="noopener noreferrer nofollow"> GitHub のリポジトリ </a>にもありますのでそちらもどうぞ！</p><h2 id="h03726fb0df">技術スタック</h2><ul><li>Svelte</li><li>SvelteKit</li><li>TypScript</li><li>SCSS</li><li>microCMS</li><li>Storybook</li></ul><h2 id="h6c9af67de8">動的なルーティングについて</h2><p>皆さんがご覧になる多くのブログには、記事が複数あると思います。しかし、それらを個々にページとして作成していては、たまったもんじゃありません。</p><p>管理も複雑化したり、デザインを変えようと思ったら全てのページで変えなければいけませんからね。</p><p>そんなときに使うのが、<strong>動的ルーティング</strong>です。</p><p>Svelteでは、</p><pre><code>src/routes/blog/[slug]/+page.svelte</code></pre><p>と配置します。</p><p>この時の<code>[slug]</code>が動的ルーティングで重要になります。</p><p>他のページから、<code>blog/</code>から続くリンクを受け取った時、その値を<code>params</code>としてページで扱うことができます。</p><p>例えば、下記のようにすることで、記事ごとに中身を変えることができます。</p><div data-filename="src/routes/blog/[slug]/+page.ts"><pre><code class="language-typescript">import { error } from &apos;@sveltejs/kit&apos;;
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="../favicon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- reset.css ress -->
+  <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@100..700&family=M+PLUS+1:wght@100..900&family=Noto+Sans+JP:wght@100..900&display=swap"
+    rel="stylesheet">
+  
+		<link href="../_app/immutable/assets/0.Bdw8zKI3.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/3.Bptf7Cw4.css" rel="stylesheet">
+		<link rel="modulepreload" href="../_app/immutable/entry/start.DOuByv0A.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/entry.CRl6xIys.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/scheduler.By2wNi7v.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index.D93Q5J27.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/paths.ekSNWH47.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/app.C26YExnW.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index.DDhgErIb.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/0.Cb-o6sKZ.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/3.BaRhmfvZ.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/each.BDpDTx22.js">
+</head>
 
-/** @type {import(&apos;./$types&apos;).PageLoad} */
-export function load({ params }) {
-  const res = await getContentDetail(&quot;blogs&quot;, slug);
-}
-  error(404, &apos;Not found&apos;);
-}</code></pre></div><p>例えば、<code>&lt;a herf=&quot;/blog/blog1&quot;&gt;</code>というリンクが押された時、<code>parms</code>には<code>blog1</code>が代入されます。<br>こうすることによって存在しない不特定なページに対してそれぞれ内容を作ることができます。</p><div data-filename="+page.svelte"><pre><code class="language-typescript">&lt;script lang=&quot;ts&quot;&gt;
-  import type { PageData } from &quot;./$types&quot;;
-  import { base } from &quot;$app/paths&quot;;
-
-  export let data: PageData;
-&lt;/script&gt;
-
-&lt;section&gt;
-  {#each data.blogList.contents as blog}
-    &lt;article&gt;
-      &lt;a href=&quot;{base}/blogs/{blog.id}&quot;&gt;&lt;h2&gt;{blog.title}&lt;/h2&gt;&lt;/a&gt;
-    &lt;/article&gt;
-  {/each}
-&lt;/section&gt;
-
-&lt;style lang=&quot;scss&quot;&gt;
-  @import &quot;svelte-materialify/src/styles/tools/colors&quot;;
-  @import &quot;svelte-materialify/src/styles/tools/elevation&quot;;
-
-  section {
-    padding: 1em 5em;
-    width: 100%;
-
-    h1 {
-      margin: 1em 0;
-      margin-bottom: 1.5em;
-      background-color: material-color(&quot;light-blue&quot;, &quot;accent-1&quot;);
-      padding: 0.5em 1em;
-      color: #1f1f1f;
-      border-radius: 0.2em;
-      font-size: 2em;
-      @include elevation(5);
-    }
-&lt;/style&gt;</code></pre></div><p></p><!-- HTML_TAG_END --></span></div> </section></div> </main> 
+<body data-sveltekit-preload-data="hover">
+  <div style="display: contents">  <main data-theme="skeleton" class="svelte-w56ylh"><header style="top: 0;" class="svelte-w56ylh"><a href="../" class="svelte-w56ylh"></a></header> <div class="svelte-w56ylh"><section class="svelte-h4b30j"><h1 class="svelte-h4b30j">さんぷる</h1> <div class="svelte-h4b30j"><div class="overlay  svelte-h4b30j"></div> <span class="svelte-h4b30j"></span></div> </section></div> </main> 
 			
 			<script>
 				{
-					__sveltekit_1l3afbr = {
+					__sveltekit_os21zq = {
 						base: new URL("..", location).pathname.slice(0, -1),
 						assets: "/study"
 					};
@@ -80,8 +42,8 @@ export function load({ params }) {
 					const data = [null,{"type":"data","data":{detail:{id:"tvmuqy3qutv",createdAt:"2024-04-29T01:33:21.919Z",updatedAt:"2024-04-29T04:54:55.204Z",publishedAt:"2024-04-29T01:33:21.919Z",revisedAt:"2024-04-29T04:54:55.204Z",title:"さんぷる",tag:["web制作"],content:"\u003Ch2 id=\"h8d027c8ed3\">はじめに\u003C/h2>\u003Cp>こんにちは！\u003Cbr>この度、MICS では、新たなホームページを作成しました！\u003C/p>\u003Cp>元々ホームページは存在していたのですが、運用が続かなかったりうやむやになってしまい、いっそのこと一新しよう！ということでこのサイトが作成されました。\u003C/p>\u003Cp>折角情報システム部のホームページができたので、第一回となるこのブログでは、ホームページ作成に関する技術的な話をしようと思います！\u003C/p>\u003Cp>※詳しい内容は\u003Ca href=\"https://github.com/misc-org/misc-mdn.dev/tree/add/pages?tab=readme-ov-file\" target=\"_blank\" rel=\"noopener noreferrer nofollow\"> GitHub のリポジトリ \u003C/a>にもありますのでそちらもどうぞ！\u003C/p>\u003Ch2 id=\"h03726fb0df\">技術スタック\u003C/h2>\u003Cul>\u003Cli>Svelte\u003C/li>\u003Cli>SvelteKit\u003C/li>\u003Cli>TypScript\u003C/li>\u003Cli>SCSS\u003C/li>\u003Cli>microCMS\u003C/li>\u003Cli>Storybook\u003C/li>\u003C/ul>\u003Ch2 id=\"h6c9af67de8\">動的なルーティングについて\u003C/h2>\u003Cp>皆さんがご覧になる多くのブログには、記事が複数あると思います。しかし、それらを個々にページとして作成していては、たまったもんじゃありません。\u003C/p>\u003Cp>管理も複雑化したり、デザインを変えようと思ったら全てのページで変えなければいけませんからね。\u003C/p>\u003Cp>そんなときに使うのが、\u003Cstrong>動的ルーティング\u003C/strong>です。\u003C/p>\u003Cp>Svelteでは、\u003C/p>\u003Cpre>\u003Ccode>src/routes/blog/[slug]/+page.svelte\u003C/code>\u003C/pre>\u003Cp>と配置します。\u003C/p>\u003Cp>この時の\u003Ccode>[slug]\u003C/code>が動的ルーティングで重要になります。\u003C/p>\u003Cp>他のページから、\u003Ccode>blog/\u003C/code>から続くリンクを受け取った時、その値を\u003Ccode>params\u003C/code>としてページで扱うことができます。\u003C/p>\u003Cp>例えば、下記のようにすることで、記事ごとに中身を変えることができます。\u003C/p>\u003Cdiv data-filename=\"src/routes/blog/[slug]/+page.ts\">\u003Cpre>\u003Ccode class=\"language-typescript\">import { error } from &apos;@sveltejs/kit&apos;;\n\n/** @type {import(&apos;./$types&apos;).PageLoad} */\nexport function load({ params }) {\n  const res = await getContentDetail(&quot;blogs&quot;, slug);\n}\n  error(404, &apos;Not found&apos;);\n}\u003C/code>\u003C/pre>\u003C/div>\u003Cp>例えば、\u003Ccode>&lt;a herf=&quot;/blog/blog1&quot;&gt;\u003C/code>というリンクが押された時、\u003Ccode>parms\u003C/code>には\u003Ccode>blog1\u003C/code>が代入されます。\u003Cbr>こうすることによって存在しない不特定なページに対してそれぞれ内容を作ることができます。\u003C/p>\u003Cdiv data-filename=\"+page.svelte\">\u003Cpre>\u003Ccode class=\"language-typescript\">&lt;script lang=&quot;ts&quot;&gt;\n  import type { PageData } from &quot;./$types&quot;;\n  import { base } from &quot;$app/paths&quot;;\n\n  export let data: PageData;\n&lt;/script&gt;\n\n&lt;section&gt;\n  {#each data.blogList.contents as blog}\n    &lt;article&gt;\n      &lt;a href=&quot;{base}/blogs/{blog.id}&quot;&gt;&lt;h2&gt;{blog.title}&lt;/h2&gt;&lt;/a&gt;\n    &lt;/article&gt;\n  {/each}\n&lt;/section&gt;\n\n&lt;style lang=&quot;scss&quot;&gt;\n  @import &quot;svelte-materialify/src/styles/tools/colors&quot;;\n  @import &quot;svelte-materialify/src/styles/tools/elevation&quot;;\n\n  section {\n    padding: 1em 5em;\n    width: 100%;\n\n    h1 {\n      margin: 1em 0;\n      margin-bottom: 1.5em;\n      background-color: material-color(&quot;light-blue&quot;, &quot;accent-1&quot;);\n      padding: 0.5em 1em;\n      color: #1f1f1f;\n      border-radius: 0.2em;\n      font-size: 2em;\n      @include elevation(5);\n    }\n&lt;/style&gt;\u003C/code>\u003C/pre>\u003C/div>\u003Cp>\u003C/p>"}},"uses":{"params":["slug"]}}];
 
 					Promise.all([
-						import("../_app/immutable/entry/start.C5NflEUK.js"),
-						import("../_app/immutable/entry/app.CTZxpuBw.js")
+						import("../_app/immutable/entry/start.DOuByv0A.js"),
+						import("../_app/immutable/entry/app.C26YExnW.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
 							node_ids: [0, 3],
@@ -93,5 +55,6 @@ export function load({ params }) {
 				}
 			</script>
 		</div>
-  </body>
+</body>
+
 </html>
