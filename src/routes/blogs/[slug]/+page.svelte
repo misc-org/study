@@ -20,6 +20,7 @@
 
   import type { PageData } from "./$types";
   export let data: PageData;
+  console.log(data);
 
   import { onMount, onDestroy } from "svelte";
   let isExpanded = false;

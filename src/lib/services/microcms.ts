@@ -34,18 +34,39 @@ export async function getContentDetail<T extends keyof EndPoints["get"]>(
   key: T,
   id: string,
   queries: MicroCMSQueries = {},
-  draftKey?: string | undefined,
 ): Promise<EndPoints["get"][T]> {
-  if (draftKey) {
-    queries.draftKey = draftKey;
-    return microcms.get<EndPoints["get"][T]>({
-      endpoint: key,
-      contentId: id,
-      queries,
-    });
+  /**
+  if (process.env.NODE_ENV === "development") {
+    switch (key) {
+      case "blogs":
+        return blogsDetail as any;
+      default:
+        throw new Error("Invalid key");
+    }
   }
-  return microcms.get<EndPoints["get"][T]>({
+  **/
+  return microcms.getListDetail<EndPoints["get"][T]>({
     endpoint: key,
     contentId: id,
+    queries,
+  });
+}
+
+export async function getDraftContentDetail<T extends keyof EndPoints["get"]>(
+  key: T,
+  id: string,
+  draftKey: string,
+): Promise<EndPoints["get"][T]> {
+  const DRAFT_MICROCMS_API_KEY = import.meta.env.VITE_DRAFT_MICROCMS_API_KEY;
+
+  const draftMicrocms = createClient({
+    serviceDomain: MICROCMS_SERVICE_DOMAIN,
+    apiKey: DRAFT_MICROCMS_API_KEY,
+  });
+
+  return draftMicrocms.get<EndPoints["get"][T]>({
+    endpoint: key,
+    contentId: id,
+    queries: { draftKey },
   });
 }
