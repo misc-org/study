@@ -26,6 +26,7 @@
 
     a {
       text-decoration: none;
+      color: material-color("light-blue", "darken-3");
     }
 
     @media (max-width: 768px) {
