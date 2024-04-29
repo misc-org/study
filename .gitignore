@@ -1,6 +1,7 @@
 .DS_Store
-node_modules
+/node_modules
 /build
+/dist
 /.svelte-kit
 /package
 .env
@@ -9,6 +10,9 @@ node_modules
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-dist/
-src/lib/assets/mocks/*
-!src/lib/assets/mocks/.gitkeep
+# wrangler files
+.wrangler
+.dev.vars
+
+/src/lib/assets/mocks/*
+!/src/lib/assets/mocks/.gitkeep
