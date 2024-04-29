@@ -1,0 +1,206 @@
+@import "svelte-materialify/src/styles/tools/colors";
+@import "svelte-materialify/src/styles/tools/elevation";
+
+:global(.filename) {
+    font-family: "M PLUS 1 Code", monospace;
+    width: fit-content;
+    font-size: 0.9em;
+    color: material-color("light-blue", "lighten-5");
+    padding: 0.4em 0.6em;
+    margin-bottom: 0;
+    background-color: material-color("light-blue", "darken-2");
+    border-radius: 0.5em;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+:global(.codeblock) {
+    padding: 1em;
+    background-color: material-color("light-blue", "lighten-5");
+    border-radius: 0.5em;
+    border-top-left-radius: 0;
+    border: 2px solid material-color("light-blue", "darken-2");
+
+    :global(.codeblock-header) {
+        position: relative;
+        margin-bottom: 1em;
+
+        :global(.codeblock-language) {
+            color: material-color("light-blue", "darken-2");
+            font-size: 0.9em;
+            padding: 0.2em;
+            border: 1px solid material-color("light-blue", "darken-2");
+            border-radius: 0.4em;
+        }
+
+        :global(button) {
+            background-color: material-color("light-blue", "darken-2");
+            color: material-color("light-blue", "lighten-5");
+            padding: 0.2em;
+            border-radius: 0.2em;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9em;
+            position: absolute;
+            right: 0em;
+            top: 0em;
+        }
+    }
+
+    :global(pre) {
+        padding: 1em;
+        overflow: auto;
+        background-color: material-color("light-blue", "lighten-5");
+
+        :global(code) {
+            color: #22272e;
+            font-family: "M PLUS 1 Code", monospace;
+
+            @media (max-width: 768px) {
+                font-size: 0.9em;
+            }
+        }
+    }
+}
+
+:global(pre) {
+    padding: 1em;
+    background-color: material-color("light-blue", "lighten-5");
+    border-radius: 0.5em;
+    border-radius: 0.5em;
+
+    :global(code) {
+        color: #22272e;
+        font-family: "M PLUS 1 Code", monospace;
+
+        @media (max-width: 768px) {
+            font-size: 0.9em;
+        }
+    }
+}
+
+:global(p) {
+    line-height: 2em;
+    margin: 2em 0;
+
+    @media (max-width: 768px) {
+        font-size: 0.9em;
+    }
+
+    :global(code) {
+        background-color: #f7f7f7;
+        color: #22272e;
+        font-size: 0.9em;
+        padding: 0.2em;
+        margin: 0 0.3em;
+        border-radius: 0.2em;
+        border: 1.5px solid #e1e1e1;
+        font-family: "M PLUS 1 Code", monospace;
+
+        @media (max-width: 768px) {
+            font-size: 0.8em;
+        }
+    }
+}
+
+:global(a) {
+    color: material-color("light-blue", "darken-3");
+    text-decoration: underline;
+}
+
+:global(img) {
+    max-width: 50%;
+    height: auto;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+:global(.overlay) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    z-index: 9999;
+    pointer-events: none;
+    transition: background 0.3s;
+}
+
+:global(.overlay.show) {
+    background: rgba(0, 0, 0, 0.2);
+    pointer-events: auto;
+}
+
+.expanded-img {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 90%;
+    max-height: 90%;
+}
+
+:global(h2) {
+    margin: 1em 0;
+    border-bottom: 4px solid material-color("light-blue", "lighten-4");
+
+    @media (max-width: 768px) {
+        font-size: 1.2em;
+    }
+
+    &::before {
+        content: "#";
+        margin-right: 0.5em;
+    }
+}
+
+:global(h3) {
+    margin: 1em 0;
+    border-bottom: 3px solid material-color("light-blue", "lighten-5");
+
+    @media (max-width: 768px) {
+        font-size: 1em;
+    }
+
+    &::before {
+        content: "##";
+        margin-right: 0.5em;
+    }
+}
+
+:global(counter-style unordered-list) {
+    system: cyclic;
+    symbols: "-";
+    suffix: " ";
+}
+
+:global(ul > li) {
+
+    @media (max-width: 768px) {
+        font-size: 0.9em;
+    }
+}
+
+:global(counter-style ordered-list) {
+    system: cyclic;
+    symbols: "1";
+    suffix: ". ";
+}
+
+:global(ol > li) {
+    list-style-type: ordered-list;
+}
+
+:global(ul),
+:global(ol) {
+    list-style-position: inside;
+}
+
+:global(hr::after) {
+    content: "* * *";
+}
+
+:global(hr) {
+    border: none;
+}
