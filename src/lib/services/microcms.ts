@@ -38,10 +38,14 @@ export async function getContentDetail<T extends keyof EndPoints["get"]>(
 ): Promise<EndPoints["get"][T]> {
   if (draftKey) {
     queries.draftKey = draftKey;
+    return microcms.get<EndPoints["get"][T]>({
+      endpoint: key,
+      contentId: id,
+      queries,
+    });
   }
   return microcms.get<EndPoints["get"][T]>({
     endpoint: key,
     contentId: id,
-    queries,
   });
 }
