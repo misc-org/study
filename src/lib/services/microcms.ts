@@ -1,6 +1,4 @@
 import { createClient, type MicroCMSQueries } from "microcms-js-sdk";
-//import blogsDetail from "$lib/assets/mocks/blogs-detail.json";
-//import blogsList from "$lib/assets/mocks/blogs-list.json";
 import type { EndPoints } from "$lib/types/microcms";
 
 const MICROCMS_SERVICE_DOMAIN = import.meta.env.VITE_MICROCMS_SERVICE_DOMAIN;
