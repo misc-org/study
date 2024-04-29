@@ -57,14 +57,8 @@ export async function getDraftContentDetail<T extends keyof EndPoints["get"]>(
   id: string,
   draftKey: string,
 ): Promise<EndPoints["get"][T]> {
-  const DRAFT_MICROCMS_API_KEY = import.meta.env.VITE_DRAFT_MICROCMS_API_KEY;
 
-  const draftMicrocms = createClient({
-    serviceDomain: MICROCMS_SERVICE_DOMAIN,
-    apiKey: DRAFT_MICROCMS_API_KEY,
-  });
-
-  return draftMicrocms.get<EndPoints["get"][T]>({
+  return microcms.get<EndPoints["get"][T]>({
     endpoint: key,
     contentId: id,
     queries: { draftKey },
