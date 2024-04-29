@@ -208,3 +208,28 @@
 :global(hr) {
     border: none;
 }
+
+:global(table) {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+    overflow: auto;
+table-layout: fixed;
+word-break: break-all;
+word-wrap: break-all;
+display: table;
+
+    :global(tbody) {
+
+        :global(tr) {
+            width: 100%;
+
+            :global(td),
+            :global(th) {
+                border: 2px solid material-color("light-blue", "lighten-4");
+                padding: 0.2em 0.5em;
+                text-align: left;
+            }
+        }
+    }
+}
