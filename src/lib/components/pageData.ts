@@ -17,6 +17,17 @@ export function parser(data: any, content: any[]) {
         } else if (node instanceof Element) {
             if (node.tagName === 'H2' || node.tagName === 'H3') {
                 content.push({ type: node.tagName.toLowerCase(), text: node.textContent || '' });
+            } else if (node.tagName === 'P') {
+                const paragraphContent: ContentItem[] = [];
+                Array.from(node.childNodes).forEach((childNode) => {
+                    if (childNode.nodeType === Node.TEXT_NODE) {
+                        paragraphContent.push({ type: "text", text: childNode.textContent || '' });
+                    } else if (childNode instanceof Element && childNode.classList.contains('icon')) {
+                        paragraphContent.push({ type: "icon", content: childNode.textContent || '' });
+                    }
+                });
+                content.push({ type: "paragraph", content: paragraphContent });
+                console.log(paragraphContent);
             } else {
                 content.push({ type: "html", html: node.outerHTML });
             }
@@ -29,4 +40,7 @@ export function parser(data: any, content: any[]) {
 export type ContentItem =
     | { type: "code"; language: string; code: string; filename?: string }
     | { type: "html"; html: string }
-    | { type: "h2" | "h3"; text: string };
+    | { type: "h2" | "h3"; text: string }
+    | { type: "text"; text: string; }
+    | { type: "icon"; content: string; }
+    | { type: "paragraph"; content: ContentItem[] };

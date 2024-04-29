@@ -101,6 +101,10 @@
             font-size: 0.8em;
         }
     }
+
+    :global(svg) {
+        margin: 0 0.3em;
+    }
 }
 
 :global(a) {
