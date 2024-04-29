@@ -1,20 +1,69 @@
 <script lang="ts">
+  import { CodeBlock } from "@skeletonlabs/skeleton";
+  import hljs from "highlight.js/lib/core";
+  import { storeHighlightJs } from "@skeletonlabs/skeleton";
+  storeHighlightJs.set(hljs);
+
+  import xml from "highlight.js/lib/languages/xml";
+  import css from "highlight.js/lib/languages/css";
+  import json from "highlight.js/lib/languages/json";
+  import javascript from "highlight.js/lib/languages/javascript";
+  import typescript from "highlight.js/lib/languages/typescript";
+
+  import "highlight.js/styles/tokyo-night-dark.css";
+
+  hljs.registerLanguage("xml", xml);
+  hljs.registerLanguage("css", css);
+  hljs.registerLanguage("json", json);
+  hljs.registerLanguage("javascript", javascript);
+  hljs.registerLanguage("typescript", typescript);
+
   import type { PageData } from "./$types";
   export let data: PageData;
 
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy } from "svelte";
   let isExpanded = false;
-  let expandedImgSrc = '';
+  let expandedImgSrc = "";
 
   let observer: MutationObserver;
+
+  type ContentItem =
+    | { type: "code"; language: string; code: string; filename?: string }
+    | { type: "html"; html: string };
+
+  let content: ContentItem[] = [];
+  let isContentLoaded = false;
+
+  onMount(async () => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(data.detail.content, "text/html");
+
+    Array.from(doc.body.childNodes).forEach((node) => {
+      if (node instanceof Element && node.hasAttribute("data-filename")) {
+        const filename = node.getAttribute("data-filename") || "";
+        const codeElement = node.querySelector("code");
+        if (codeElement) {
+          const language = codeElement.className.replace("language-", "");
+          const code: string = codeElement.textContent
+            ? codeElement.textContent
+            : "";
+
+          content.push({ type: "code", language, code, filename });
+        }
+      } else if (node instanceof Element) {
+        content.push({ type: "html", html: node.outerHTML });
+      }
+    });
+    isContentLoaded = true;
+  });
 
   onMount(() => {
     observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
-        if (mutation.type === 'childList') {
-          const images = document.querySelectorAll('img');
+        if (mutation.type === "childList") {
+          const images = document.querySelectorAll("img");
           images.forEach((img) => {
-            img.addEventListener('click', () => {
+            img.addEventListener("click", () => {
               isExpanded = true;
               expandedImgSrc = img.src;
             });
@@ -46,27 +95,52 @@
         <img class="expanded-img" src={expandedImgSrc} />
       {/if}
     </div>
-    <span>{@html data.detail.content}</span>
+    <span>
+      {#if isContentLoaded}
+        {#each content as item (item)}
+          {#if item.type === "code"}
+            <p class="filename">{item.filename}</p>
+            <CodeBlock language={item.language} code={item.code} />
+          {:else}
+            {@html item.html}
+          {/if}
+        {/each}
+      {/if}
+    </span>
   </div>
 </section>
 
 <style lang="scss">
+  @import "svelte-materialify/src/styles/tools/colors";
+  @import "svelte-materialify/src/styles/tools/elevation";
+
   section {
     padding: 1em 5em;
+    width: 100%;
 
     h1 {
       margin: 1em 0;
       margin-bottom: 1.5em;
-      background-color: #6deeff;
+      background-color: material-color("light-blue", "accent-1");
       padding: 0.5em 1em;
       color: #1f1f1f;
       border-radius: 0.2em;
+      font-size: 2em;
+      @include elevation(5);
     }
 
     div {
       display: flex;
       flex-direction: column;
       align-items: center;
+    }
+
+    span {
+      width: 100%;
+      padding: 5em;
+      background-color: #fff;
+      border-radius: 0.5em;
+      @include elevation(5);
     }
   }
 
@@ -78,16 +152,90 @@
         font-size: 1.5em;
         padding: 0.5em;
       }
+
+      span {
+        padding: 2em;
+      }
+    }
+  }
+
+  :global(.filename) {
+    font-family: "M PLUS 1 Code", monospace;
+    width: fit-content;
+    font-size: 0.9em;
+    color: #1f1f1f;
+    padding: 0.5em;
+    margin-bottom: 0.5em;
+    background-color: #f0f0f0;
+    border-radius: 0.2em;
+  }
+
+  :global(.codeblock) {
+    padding: 1em;
+    background-color: #1f1f1f;
+    border-radius: 0.5em;
+
+    :global(.codeblock-header) {
+      position: relative;
+      margin-bottom: 1em;
+
+      :global(.codeblock-language) {
+        color: material-color("light-blue", "lighten-5");
+        font-size: 0.9em;
+        padding: 0.2em;
+      }
+      :global(button) {
+        background-color: #fff;
+        color: #1f1f1f;
+        padding: 0.2em;
+        border-radius: 0.2em;
+        border: none;
+        cursor: pointer;
+        font-size: 0.9em;
+        position: absolute;
+        right: 0em;
+        top: 0em;
+      }
+    }
+
+    :global(pre) {
+      padding: 1em;
+      overflow: auto;
+
+      :global(code) {
+        color: #fff;
+        font-family: "M PLUS 1 Code", monospace;
+      }
+    }
+  }
+
+  :global(pre) {
+    padding: 1em;
+    background-color: #1f1f1f;
+    border-radius: 0.5em;
+
+    :global(code) {
+      color: #fff;
+      font-family: "M PLUS 1 Code", monospace;
     }
   }
 
   :global(p) {
     line-height: 1.5em;
     margin: 2em 0;
+
+    :global(code) {
+      background-color: #1f1f1f;
+      color: #fff;
+      padding: 0.3em;
+      margin: 0 0.3em;
+      border-radius: 0.2em;
+      font-family: "M PLUS 1 Code", monospace;
+    }
   }
 
   :global(a) {
-    color: #0070f3;
+    color: material-color("light-blue", "darken-3");
     text-decoration: none;
     &:hover {
       text-decoration: underline;
@@ -127,10 +275,11 @@
   }
 
   :global(h1) {
-    font-size: 2.5em;
+    font-size: 2em;
   }
   :global(h2) {
     margin: 1em 0;
+    border-bottom: 4px solid material-color("light-blue", "lighten-4");
     &::before {
       content: "#";
       margin-right: 0.5em;
@@ -166,14 +315,6 @@
   :global(ul),
   :global(ol) {
     list-style-position: inside;
-  }
-
-  :global(pre > code::before) {
-    content: "```" attr(data-lang);
-  }
-
-  :global(pre > code::after) {
-    content: "```";
   }
 
   :global(hr::after) {

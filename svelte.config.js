@@ -5,7 +5,11 @@ const production = process.env.NODE_ENV === "production";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-  preprocess: vitePreprocess(),
+  preprocess: vitePreprocess({
+    scss: {
+      includePaths: ['theme'],
+    },
+  }),
 
   kit: {
     adapter: adapter({

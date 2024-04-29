@@ -18,7 +18,7 @@
   });
 </script>
 
-<main>
+<main data-theme="skeleton">
   <header style=" top: {isScrollingDown ? '-50px' : '0'}; ">
     <a href="{base}/"
       ><Icon icon="material-symbols:home-app-logo" height={30} /></a
@@ -30,24 +30,27 @@
 </main>
 
 <style lang="scss">
+  @import 'svelte-materialify/src/styles/tools/colors';
+
   :global(body) {
     margin: 0;
-    background-color: #f0f0f0;
+    background-color: material-color('light-blue', 'lighten-5');
+    width: 100%;
   }
 
   main {
     font-family: "M PLUS 1p", sans-serif;
+    width: 100%;
 
     header {
       width: 100%;
-      background-color: #6deeff;
+      background-color: material-color('light-blue', 'base');
       padding: 1em 5em;
-      color: #1f1f1f;
       position: fixed;
       transition: top 0.3s;
 
       a {
-        color: rgb(29, 76, 95);
+        color: material-color('light-blue', 'lighten-5');
         text-decoration: none;
         display: flex;
         align-items: center;
@@ -62,6 +65,7 @@
     div {
       margin-top: 5em;
       padding: 1em 5em;
+      width: 100%;
     }
 
     @media (max-width: 768px) {
