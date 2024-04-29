@@ -20,6 +20,7 @@
 
 <svelte:head>
   <title>MISCTUDY</title>
+  <meta name="description" content="情報システム部のスキル共有ブログサイト「MICTUDY」です！" />
 </svelte:head>
 
 <main data-theme="skeleton">

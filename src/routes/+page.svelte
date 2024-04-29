@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  import { base } from "$app/paths";
 
   export let data: PageData;
 </script>
@@ -8,7 +7,7 @@
 <section>
   {#each data.blogList.contents as blog}
     <article>
-      <h2><a href="{base}/blogs/{blog.id}">{blog.title}</a></h2>
+      <h2><a href="/blogs/{blog.id}">{blog.title}</a></h2>
     </article>
   {/each}
 </section>
