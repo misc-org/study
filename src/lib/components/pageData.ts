@@ -22,12 +22,15 @@ export function parser(data: any, content: any[]) {
                 Array.from(node.childNodes).forEach((childNode) => {
                     if (childNode.nodeType === Node.TEXT_NODE) {
                         paragraphContent.push({ type: "text", text: childNode.textContent || '' });
-                    } else if (childNode instanceof Element && childNode.classList.contains('icon')) {
-                        paragraphContent.push({ type: "icon", content: childNode.textContent || '' });
+                    } else if (childNode instanceof Element) {
+                        if (childNode.classList.contains('icon')) {
+                            paragraphContent.push({ type: "icon", content: childNode.textContent || '' });
+                        } else if (childNode.tagName === 'CODE') {
+                            paragraphContent.push({ type: "code", text: childNode.textContent || '' });
+                        }
                     }
                 });
                 content.push({ type: "paragraph", content: paragraphContent });
-                console.log(paragraphContent);
             } else {
                 content.push({ type: "html", html: node.outerHTML });
             }
@@ -42,5 +45,6 @@ export type ContentItem =
     | { type: "html"; html: string }
     | { type: "h2" | "h3"; text: string }
     | { type: "text"; text: string; }
+    | { type: "code"; text: string;}
     | { type: "icon"; content: string; }
-    | { type: "paragraph"; content: ContentItem[] };
+    | { type: "paragraph"; content: ContentItem[] }

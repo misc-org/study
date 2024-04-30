@@ -67,6 +67,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>MISCTUDY - {data.detail.title}</title>
+</svelte:head>
+
 <section>
   <h1>{data.detail.title}</h1>
   {#if tableOfContents.length > 0}
@@ -111,6 +115,8 @@
                 {text.text}
               {:else if text.type === "icon"}
                 <Icon icon={text.content} height={15} />
+              {:else if text.type === "code"}
+                <code>{text.text}</code>
               {/if}
             {/each}
           </p>
