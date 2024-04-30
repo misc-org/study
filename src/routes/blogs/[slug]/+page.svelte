@@ -104,6 +104,16 @@
             <h2 id={countHeading(item)}>{item.text}</h2>
           {:else if item.type === "h3"}
             <h3 id={countHeading(item)}>{item.text}</h3>
+          {:else if item.type === "paragraph"}
+          <p>
+            {#each item.content as text (text)}
+              {#if text.type === "text"}
+                {text.text}
+              {:else if text.type === "icon"}
+                <Icon icon={text.content} height={15} />
+              {/if}
+            {/each}
+          </p>
           {:else if item.type === "html"}
             {@html item.html}
           {/if}
