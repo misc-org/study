@@ -27,6 +27,8 @@ export function parser(data: any, content: any[]) {
                             paragraphContent.push({ type: "icon", content: childNode.textContent || '' });
                         } else if (childNode.tagName === 'CODE') {
                             paragraphContent.push({ type: "code", text: childNode.textContent || '' });
+                        } else if (childNode.tagName === 'BR') {
+                            paragraphContent.push({ type: "text", text: '<br>' });
                         }
                     }
                 });

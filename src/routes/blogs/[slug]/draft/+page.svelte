@@ -112,7 +112,9 @@
           {:else if item.type === "paragraph"}
           <p>
             {#each item.content as text (text)}
-              {#if text.type === "text"}
+            {#if text.type === "text" && text.text === "<br>"}
+            <br>
+              {:else if text.type === "text"}
                 {text.text}
               {:else if text.type === "icon"}
                 <Icon icon={text.content} height={15} />
