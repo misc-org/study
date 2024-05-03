@@ -1,6 +1,8 @@
 <script lang="ts">
-  import { CodeBlock } from "@skeletonlabs/skeleton";
   import { setupHighlightJs } from "$lib/components/blogPage";
+  import BlogParser from "$lib/components/BlogParser.svelte";
+  import ImagePaeser from "$lib/components/ImageParser.svelte";
+  import TableParser from "$lib/components/TableParser.svelte";
 
   setupHighlightJs();
 
@@ -8,35 +10,29 @@
   export let data: PageData;
 
   import { onMount, onDestroy } from "svelte";
-  import { parser, type ContentItem } from "$lib/components/pageData";
+  import { parser, type MainElement } from "$lib/components/pageData";
   let isExpanded = false;
   let expandedImgSrc = "";
 
   let observer: MutationObserver;
 
-  let content: ContentItem[] = [];
+  let content: MainElement[] = [];
   let isContentLoaded = false;
 
-  let tableOfContents: ContentItem[] = [];
+  let tableOfContents: any[] = [];
 
   onMount(async () => {
     parser(data.detail.content, content);
-    tableOfContents = content.filter(
-      (item) => item.type === "h2" || item.type === "h3",
-    );
+    tableOfContents = content
+      .map((item, index) => {
+        if (item.type === "h2" || item.type === "h3") {
+          return { ...item, number: index };
+        }
+        return null;
+      })
+      .filter(Boolean);
     isContentLoaded = true;
   });
-
-  let h = -1;
-  function countHeading(item) {
-    if (item.type === "h2") {
-      h++;
-      return `h2-${h}`;
-    } else if (item.type === "h3") {
-      h++;
-      return `h3-${h}`;
-    }
-  }
 
   onMount(() => {
     observer = new MutationObserver((mutations) => {
@@ -54,6 +50,19 @@
     });
 
     observer.observe(document.body, { childList: true, subtree: true });
+  });
+
+  let iconSize: number = 20;
+
+  onMount(() => {
+    const width = window.innerWidth;
+    if (width <= 480) {
+      iconSize = 15;
+    } else if (width <= 768) {
+      iconSize = 15;
+    } else {
+      iconSize = 20;
+    }
   });
 
   onDestroy(() => {
@@ -77,13 +86,15 @@
     <nav>
       <h2>目次</h2>
       <ul>
-        {#each tableOfContents as item, i}
-          <li>
-            {#if item.type === "h2"}
-              <a href="#h2-{i}">{item.text}</a>
-            {:else if item.type === "h3"}
-              <a href="#h3-{i}" class="level2">{item.text}</a>
-            {/if}
+        {#each tableOfContents as item (item.number)}
+          <li class={item.type}>
+            <a href={"#" + item.type + "-" + item.number}>
+              {#each item.content as subItem}
+                {#if subItem.type === "text"}
+                  {subItem.text}
+                {/if}
+              {/each}
+            </a>
           </li>
         {/each}
       </ul>
@@ -100,28 +111,93 @@
     </div>
     <span>
       {#if isContentLoaded}
-        {#each content as item (item)}
-          {#if item.type === "code"}
-            <p class="filename">{item.filename}</p>
-            <CodeBlock language={item.language} code={item.code} />
-          {:else if item.type === "h2"}
-            <h2 id={countHeading(item)}>{item.text}</h2>
+        {#each content as item, i}
+          {#if item.type === "h2"}
+            <h2 id={"h2-" + i}>
+              {#each item.content as subItem}
+                {#if subItem.type === "text"}
+                  {subItem.text}
+                {/if}
+              {/each}
+            </h2>
           {:else if item.type === "h3"}
-            <h3 id={countHeading(item)}>{item.text}</h3>
-          {:else if item.type === "paragraph"}
-          <p>
-            {#each item.content as text (text)}
-              {#if text.type === "text"}
-                {text.text}
-              {:else if text.type === "icon"}
-                <Icon icon={text.content} height={15} />
-              {:else if text.type === "code"}
-                <code>{text.text}</code>
-              {/if}
-            {/each}
-          </p>
-          {:else if item.type === "html"}
-            {@html item.html}
+            <h3 id={"h3-" + i}>
+              {#each item.content as subItem}
+                {#if subItem.type === "text"}
+                  {subItem.text}
+                {/if}
+              {/each}
+            </h3>
+          {:else if item.type === "h4"}
+            <h4>
+              {#each item.content as subItem}
+                {#if subItem.type === "text"}
+                  {subItem.text}
+                {/if}
+              {/each}
+            </h4>
+          {:else if item.type === "p"}
+            <p>
+              <BlogParser content={item.content} {iconSize} />
+            </p>
+          {:else if item.type === "pre"}
+            <pre>
+            <code>
+              {item.content}
+            </code>
+        </pre>
+          {:else if item.type === "figure"}
+            <figure>
+              <ImagePaeser content={item.content} />
+            </figure>
+          {:else if item.type === "ul"}
+            <ul>
+              {#each item.content as subItem}
+                <li>
+                  {#if Array.isArray(subItem.li)}
+                    <BlogParser content={subItem.li} {iconSize} />
+                  {/if}
+                </li>
+              {/each}
+            </ul>
+          {:else if item.type === "ol"}
+            <ol>
+              {#each item.content as subItem}
+                <li>
+                  {#if Array.isArray(subItem.li)}
+                    <BlogParser content={subItem.li} {iconSize} />
+                  {/if}
+                </li>
+              {/each}
+            </ol>
+          {:else if item.type === "blockquote"}
+            <blockquote>
+              {#each item.content as subItem}
+                {#if subItem.type === "p"}
+                  <p>
+                    <BlogParser content={subItem.content} {iconSize} />
+                  </p>
+                {/if}
+              {/each}
+            </blockquote>
+          {:else if item.type === "table"}
+            <table>
+              {#each item.content.tbody as subItem}
+                <tr>
+                  {#each subItem.content as subSubItem}
+                    {#if subSubItem.type === "th"}
+                      <th>
+                        <TableParser content={subSubItem.content} {iconSize} />
+                      </th>
+                    {:else if subSubItem.type === "td"}
+                      <td>
+                        <TableParser content={subSubItem.content} {iconSize} />
+                      </td>
+                    {/if}
+                  {/each}
+                </tr>
+              {/each}
+            </table>
           {/if}
         {/each}
       {/if}
@@ -174,7 +250,7 @@
             font-size: 1.2em;
 
             &.level2 {
-              margin-left: .5em;
+              margin-left: 0.5em;
             }
           }
         }
