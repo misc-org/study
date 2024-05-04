@@ -218,6 +218,22 @@
     border: none;
 }
 
+:global(blockquote) {
+    border-left: 4px solid material-color("light-blue", "lighten-4");
+    padding: 0.5em 1em;
+    margin: 1em 0;
+    background-color: material-color("light-blue", "lighten-5");
+
+    @media (max-width: 768px) {
+        font-size: 0.9em;
+    }
+
+    :global(p) {
+        margin: 0.5em 0;
+        font-style: italic;
+    }
+}
+
 :global(table) {
     border-collapse: collapse;
     width: 100%;
@@ -228,21 +244,23 @@
     word-wrap: break-all;
     display: table;
 
-    :global(tbody) {
 
-        :global(tr) {
-            width: 100%;
+    :global(tr) {
+        width: 100%;
 
-            :global(td),
-            :global(th) {
-                border: 2px solid material-color("light-blue", "lighten-4");
-                padding: 0 0.5em;
-                text-align: left;
+        :global(td),
+        :global(th) {
+            border: 2px solid material-color("light-blue", "lighten-4");
+            padding: 0 0.5em;
+            text-align: left;
 
-                :global(p) {
-                    margin: 0.5em 0;
-                }
+            :global(p) {
+                margin: 0.5em 0;
             }
+        }
+
+        :global(th) {
+            background-color: material-color("light-blue", "lighten-5");
         }
     }
 }
