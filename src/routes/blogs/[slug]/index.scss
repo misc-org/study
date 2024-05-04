@@ -71,12 +71,10 @@
     }
 }
 
-:global(div:has(code)) {
+:global(pre) {
     padding: 1em;
     background-color: material-color("light-blue", "lighten-5");
     border-radius: 0.5em;
-    white-space: pre-wrap;
-    text-align: left;
 
     :global(code) {
         width: 100%;

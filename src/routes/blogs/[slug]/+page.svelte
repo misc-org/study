@@ -144,12 +144,9 @@
               <BlogParser content={item.content} {iconSize} />
             </p>
           {:else if item.type === "pre"}
-            <pre>{JSON.stringify(item, null, 2)}</pre>
-            <div>
-              <code>
-                {item.content.map((subItem) => subItem.code).join("\n")}
-              </code>
-            </div>
+            <pre><code
+                >{#each item.content as subItem}{subItem.code}{/each}</code
+              ></pre>
           {:else if item.type === "figure"}
             <figure>
               <ImagePaeser content={item.content} />
