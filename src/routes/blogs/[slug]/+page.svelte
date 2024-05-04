@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { CodeBlock } from "@skeletonlabs/skeleton";
   import { setupHighlightJs } from "$lib/components/blogPage";
   import BlogParser from "$lib/components/BlogParser.svelte";
   import ImagePaeser from "$lib/components/ImageParser.svelte";
@@ -22,16 +23,18 @@
   let tableOfContents: any[] = [];
 
   onMount(async () => {
-    parser(data.detail.content, content);
-    tableOfContents = content
-      .map((item, index) => {
-        if (item.type === "h2" || item.type === "h3") {
-          return { ...item, number: index };
-        }
-        return null;
-      })
-      .filter(Boolean);
-    isContentLoaded = true;
+    if (data && data.detail) {
+      parser(data.detail.content, content);
+      tableOfContents = content
+        .map((item, index) => {
+          if (item.type === "h2" || item.type === "h3") {
+            return { ...item, number: index };
+          }
+          return null;
+        })
+        .filter(Boolean);
+      isContentLoaded = true;
+    }
   });
 
   onMount(() => {
@@ -141,11 +144,12 @@
               <BlogParser content={item.content} {iconSize} />
             </p>
           {:else if item.type === "pre"}
-            <pre>
-            <code>
-              {item.content}
-            </code>
-        </pre>
+            <pre>{JSON.stringify(item, null, 2)}</pre>
+            <div>
+              <code>
+                {item.content.map((subItem) => subItem.code).join("\n")}
+              </code>
+            </div>
           {:else if item.type === "figure"}
             <figure>
               <ImagePaeser content={item.content} />
