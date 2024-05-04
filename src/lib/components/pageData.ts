@@ -161,7 +161,6 @@ function processTable(node: Element): TableElement {
 function processCode(node: Element): CodeFormat[] {
     const code = node.textContent || '';
     const language = node.getAttribute('data-language') || '';
-    console.log(code, language);
 
     return [{ type: 'code', language, code }];
 }
