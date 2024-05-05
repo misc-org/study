@@ -9,7 +9,7 @@ export type TextFormat =
     | { type: 'span', content: SpanElement };
 
 export type MainElement =
-    | { type: 'p', content: Content }
+    | { type: 'p', content: Content, style?: { property: string, value: string }[] }
     | { type: 'h2' | 'h3' | 'h4', content: Content }
     | { type: 'blockquote', content: MainElement[] }
     | { type: 'table', content: TableElement }
@@ -26,7 +26,7 @@ type TableCellElement = { type: 'th' | 'td', content: MainElement[] };
 
 type ListElement = { li: Content | MainElement };
 
-type DivElement = { 'data-filename': string, pre: { code: string } };
+type DivElement = { filename?: string, code: string, lang?: string };
 
 export type FigureElement = {
     a?: string,
@@ -40,30 +40,30 @@ export type FigureElement = {
 
 type CodeFormat = { type: 'code', language: string, code: string, filename?: string };
 
-type SpanElement =
-    | { type: 'icon', content: string, size?: number }
-    | { type: 'answer', content: string };
+type SpanElement = { type: 'icon', content: string, size?: number }
 
 function processSpan(node: Element): SpanElement {
     const className = node.getAttribute('class') || '';
-    const content = node.textContent || '';
+    let content = node.textContent || '';
+    let size;
 
     if (className === 'icon') {
-        return { type: 'icon', content };
-    } else if (className === 'answer') {
-        return { type: 'answer', content };
+        const match = content.match(/\$\$(\d+)$/);
+        if (match) {
+            content = content.replace(/\$\$\d+$/, '');
+            size = parseInt(match[1], 10);
+        }
+        return { type: 'icon', content, size };
     }
 
-    return { type: 'icon', content };
+    return { type: 'icon', content: 'error' };
 }
 
 function processText(node: Element): Content {
     const content: Content = [];
 
     Array.from(node.childNodes).forEach((childNode) => {
-        if (childNode.nodeType === Node.TEXT_NODE) {
-            content.push({ type: "text", text: childNode.textContent || '' });
-        } else if (childNode instanceof Element) {
+        if (childNode instanceof Element) {
             const tagName = childNode.tagName.toLowerCase();
             if (tagName === 'u' || tagName === 's' || tagName === 'em' || tagName === 'strong' || tagName === 'br') {
                 content.push({ type: tagName, content: { type: 'text', text: childNode.textContent as string } });
@@ -74,6 +74,8 @@ function processText(node: Element): Content {
             } else if (tagName === 'code') {
                 content.push({ type: 'code', content: { type: 'text', text: childNode.textContent as string } });
             }
+        } else if (childNode.nodeType === Node.TEXT_NODE) {
+            content.push({ type: 'text', text: childNode.textContent as string });
         }
     });
 
@@ -96,10 +98,19 @@ function processList(node: Element): ListElement[] {
 
 function processDiv(node: Element): DivElement {
     const filename = node.getAttribute("data-filename") || "";
-    const codeElement = node.querySelector("code");
+    const codeElement = node.querySelector("pre > code");
     const code = codeElement ? codeElement.textContent || "" : "";
 
-    return { 'data-filename': filename, pre: { code } };
+    let lang = "";
+    if (codeElement) {
+        const classList = Array.from(codeElement.classList);
+        const languageClass = classList.find(className => className.startsWith('language-'));
+        if (languageClass) {
+            lang = languageClass.slice('language-'.length);
+        }
+    }
+
+    return { filename, code, lang };
 }
 
 function processFigure(node: Element): FigureElement {
@@ -200,7 +211,13 @@ export function parser(data: any, content: any[]) {
             } else if (node.tagName === 'BLOCKQUOTE') {
                 content.push({ type: 'blockquote', content: processQuote(node) });
             } else if (node.tagName === 'P') {
-                content.push({ type: 'p', content: processText(node) });
+                const styleAttr = node.getAttribute("style") || "";
+                const styles = styleAttr.split(";").map((style) => {
+                    const [property, value] = style.split(":").map(s => s.trim());
+                    return {property, value};
+                }).filter(({property, value}) => property && value);
+                content.push({ type: 'p', content: processText(node), style: styles });
+                console.log(content);
             } else {
                 content.push({ type: "html", html: node.outerHTML });
             }

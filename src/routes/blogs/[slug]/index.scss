@@ -22,14 +22,31 @@
     border-bottom-right-radius: 0;
 }
 
-:global(.codeblock) {
+:global(.codeblock-wrap) {
     padding: 1em;
     background-color: material-color("light-blue", "lighten-5");
     border-radius: 0.5em;
-    border-top-left-radius: 0;
     border: 2px solid material-color("light-blue", "darken-2");
+    position: relative;
+
+    div {
+        font-size: 0.9em;
+        position: absolute;
+        top: -15px;
+        left: -2px;
+        padding: 0.5em;
+        background-color: material-color("light-blue", "lighten-5");
+        border-radius: 0.5em;
+        border: 2px solid material-color("light-blue", "darken-2");
+    }
+
+    :global(.codeblock){
+        width: 100%;
+        margin-top: 1.5em;;
+    }
 
     :global(.codeblock-header) {
+        width: 100%;
         position: relative;
         margin-bottom: 1em;
 
@@ -75,13 +92,13 @@
     padding: 1em;
     background-color: material-color("light-blue", "lighten-5");
     border-radius: 0.5em;
+    overflow: auto;
 
     :global(code) {
         width: 100%;
         color: #22272e;
         font-family: "M PLUS 1 Code", monospace;
         text-align: left;
-        white-space: pre-wrap;
 
         @media (max-width: 768px) {
             font-size: 0.9em;
@@ -122,11 +139,14 @@
     text-decoration: underline;
 }
 
-:global(img) {
-    max-width: 50%;
-    height: auto;
-    transition: transform 0.3s;
-    cursor: pointer;
+:global(figure) {
+    margin: 2em 0;
+    text-align: center;
+
+    :global(img) {
+        max-width: 100%;
+        height: auto;
+    }
 }
 
 :global(.overlay) {

@@ -80,28 +80,32 @@
 </script>
 
 <svelte:head>
-  <title>MISCTUDY - {data.detail.title}</title>
+  {#if data && data.detail}
+    <title>MISCTUDY - {data.detail.title}</title>
+  {/if}
 </svelte:head>
 
 <section>
-  <h1>{data.detail.title}</h1>
-  {#if tableOfContents.length > 0}
-    <nav>
-      <h2>目次</h2>
-      <ul>
-        {#each tableOfContents as item (item.number)}
-          <li class={item.type}>
-            <a href={"#" + item.type + "-" + item.number}>
-              {#each item.content as subItem}
-                {#if subItem.type === "text"}
-                  {subItem.text}
-                {/if}
-              {/each}
-            </a>
-          </li>
-        {/each}
-      </ul>
-    </nav>
+  {#if data && data.detail}
+    <h1>{data.detail.title}</h1>
+    {#if tableOfContents.length > 0}
+      <nav>
+        <h2>目次</h2>
+        <ul>
+          {#each tableOfContents as item (item.number)}
+            <li class={item.type}>
+              <a href={"#" + item.type + "-" + item.number}>
+                {#each item.content as subItem}
+                  {#if subItem.type === "text"}
+                    {subItem.text}
+                  {/if}
+                {/each}
+              </a>
+            </li>
+          {/each}
+        </ul>
+      </nav>
+    {/if}
   {/if}
   <div>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -114,9 +118,9 @@
     </div>
     <span>
       {#if isContentLoaded}
-        {#each content as item, i}
+        {#each content as item}
           {#if item.type === "h2"}
-            <h2 id={"h2-" + i}>
+            <h2>
               {#each item.content as subItem}
                 {#if subItem.type === "text"}
                   {subItem.text}
@@ -124,7 +128,7 @@
               {/each}
             </h2>
           {:else if item.type === "h3"}
-            <h3 id={"h3-" + i}>
+            <h3>
               {#each item.content as subItem}
                 {#if subItem.type === "text"}
                   {subItem.text}
@@ -140,9 +144,15 @@
               {/each}
             </h4>
           {:else if item.type === "p"}
-            <p>
-              <BlogParser content={item.content} {iconSize} />
-            </p>
+            {#if item.style}
+            <p style='{item.style.map(({property, value}) => `${property}: ${value}`).join("; ")}'>
+                <BlogParser content={item.content} {iconSize} />
+              </p>
+            {:else}
+              <p>
+                <BlogParser content={item.content} {iconSize} />
+              </p>
+            {/if}
           {:else if item.type === "pre"}
             <pre><code
                 >{#each item.content as subItem}{subItem.code}{/each}</code
@@ -181,6 +191,16 @@
                 {/if}
               {/each}
             </blockquote>
+          {:else if item.type === "div"}
+            <div class="codeblock-wrap">
+              {#if item.content.filename}
+                <div>{item.content.filename}</div>
+              {/if}
+              <CodeBlock
+                language={item.content.lang}
+                code={item.content.code}
+              />
+            </div>
           {:else if item.type === "table"}
             <table>
               {#each item.content.tbody as subItem}
