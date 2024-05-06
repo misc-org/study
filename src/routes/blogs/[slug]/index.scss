@@ -231,12 +231,8 @@
     list-style-position: inside;
 }
 
-:global(hr::after) {
-    content: "* * *";
-}
-
 :global(hr) {
-    border: none;
+    border: 2px solid material-color("light-blue", "lighten-4");
 }
 
 :global(blockquote) {

@@ -6,6 +6,7 @@ export type TextFormat =
     | RawText
     | { type: 'u' | 's' | 'em' | 'strong' | 'a' | 'code', content: RawText } & Partial<{ href: string }>
     | { type: 'br' }
+    | { type: 'hr' }
     | { type: 'span', content: SpanElement };
 
 export type MainElement =
@@ -217,7 +218,8 @@ export function parser(data: any, content: any[]) {
                     return {property, value};
                 }).filter(({property, value}) => property && value);
                 content.push({ type: 'p', content: processText(node), style: styles });
-                console.log(content);
+            } else if (node.tagName === 'HR') {
+                content.push({ type: 'hr', content: [] });
             } else {
                 content.push({ type: "html", html: node.outerHTML });
             }

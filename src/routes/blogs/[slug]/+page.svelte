@@ -219,6 +219,8 @@
                 </tr>
               {/each}
             </table>
+          {:else if item.type === "hr"}
+            <hr />
           {/if}
         {/each}
       {/if}
