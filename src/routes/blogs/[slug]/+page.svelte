@@ -238,7 +238,7 @@
   }
 
   section {
-    padding: 1em 5em;
+    padding: 1em 4em;
     width: 100%;
 
     h1 {
@@ -292,6 +292,21 @@
       background-color: #fff;
       border-radius: 0.5em;
       @include elevation(5);
+    }
+  }
+
+  @media (max-width: 1200px) {
+    section {
+      padding: 1em;
+
+      h1 {
+        font-size: 1.5em;
+        padding: 0.5em;
+      }
+
+      span {
+        padding: 1.5em;
+      }
     }
   }
 

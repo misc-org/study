@@ -208,8 +208,9 @@
     symbols: "-";
     suffix: " ";
 }
-
 :global(ul > li) {
+
+    margin: .5em 0;
 
     @media (max-width: 768px) {
         font-size: 0.9em;
@@ -229,6 +230,27 @@
 :global(ul),
 :global(ol) {
     list-style-position: inside;
+
+    margin: 1em 0;
+
+    :global(code) {
+        background-color: #f7f7f7;
+        color: #22272e;
+        font-size: 0.9em;
+        padding: 0.2em;
+        margin: 0 0.3em;
+        border-radius: 0.2em;
+        border: 1.5px solid #e1e1e1;
+        font-family: "M PLUS 1 Code", monospace;
+
+        @media (max-width: 768px) {
+            font-size: 0.8em;
+        }
+    }
+
+    :global(svg) {
+        margin: 0 0.3em;
+    }
 }
 
 :global(hr) {

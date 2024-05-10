@@ -41,7 +41,9 @@ export type FigureElement = {
 
 type CodeFormat = { type: 'code', language: string, code: string, filename?: string };
 
-type SpanElement = { type: 'icon', content: string, size?: number }
+type SpanElement =
+    |{ type: 'icon', content: string, size?: number }
+    |{ type: 'answer', content: string };
 
 function processSpan(node: Element): SpanElement {
     const className = node.getAttribute('class') || '';
@@ -55,6 +57,8 @@ function processSpan(node: Element): SpanElement {
             size = parseInt(match[1], 10);
         }
         return { type: 'icon', content, size };
+    } else if (className === 'answer') {
+        return { type: 'answer', content };
     }
 
     return { type: 'icon', content: 'error' };
