@@ -41,9 +41,19 @@ export type FigureElement = {
 
 type CodeFormat = { type: 'code', language: string, code: string, filename?: string };
 
+type InfoContent = { title: string, main: string }
+
+type Info =
+    | { type: 'comment', content: InfoContent }
+    | { type: 'important', content: InfoContent }
+    | { type: 'info', content: InfoContent }
+    | { type: 'success', content: InfoContent };
+
 type SpanElement =
-    |{ type: 'icon', content: string, size?: number }
-    |{ type: 'answer', content: string };
+    | { type: 'icon', content: string, size?: number }
+    | { type: 'answer', content: string }
+    | { type: 'hint', content: string }
+    | { type: 'info', content: Info };
 
 function processSpan(node: Element): SpanElement {
     const className = node.getAttribute('class') || '';
@@ -59,6 +69,33 @@ function processSpan(node: Element): SpanElement {
         return { type: 'icon', content, size };
     } else if (className === 'answer') {
         return { type: 'answer', content };
+    } else if (className === 'hint') {
+        return { type: 'hint', content };
+    } else if (className === 'info') {
+        const domParser = new DOMParser();
+        const doc = domParser.parseFromString(content, "text/html");
+        const innerSpans = doc.querySelectorAll('body span');
+        let title = '';
+        let main = '';
+        let type: "comment" | "important" | "info" | "success" = 'info';
+
+        innerSpans.forEach((span) => {
+            const spanClass = span.getAttribute("class") || '';
+            const spanContent = span.textContent || '';
+            if (['comment', 'important', 'info', 'success'].includes(spanClass)) {
+                type = spanClass as "comment" | "important" | "info" | "success";
+                title = spanContent;
+            } else {
+                main += spanContent;
+            }
+        });
+
+        content = content.replace(/<span.*<\/span>/, '');
+        main += content;
+
+        if (type) {
+            return { type: 'info', content: { type, content: { title, main } } };
+        }
     }
 
     return { type: 'icon', content: 'error' };
@@ -219,8 +256,8 @@ export function parser(data: any, content: any[]) {
                 const styleAttr = node.getAttribute("style") || "";
                 const styles = styleAttr.split(";").map((style) => {
                     const [property, value] = style.split(":").map(s => s.trim());
-                    return {property, value};
-                }).filter(({property, value}) => property && value);
+                    return { property, value };
+                }).filter(({ property, value }) => property && value);
                 content.push({ type: 'p', content: processText(node), style: styles });
             } else if (node.tagName === 'HR') {
                 content.push({ type: 'hr', content: [] });

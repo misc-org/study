@@ -5,7 +5,7 @@ import css from "highlight.js/lib/languages/css";
 import json from "highlight.js/lib/languages/json";
 import javascript from "highlight.js/lib/languages/javascript";
 import typescript from "highlight.js/lib/languages/typescript";
-import "highlight.js/styles/panda-syntax-light.css";
+import "highlight.js/styles/panda-syntax-dark.css";
 
 export function setupHighlightJs() {
   storeHighlightJs.set(hljs);
