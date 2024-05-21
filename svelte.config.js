@@ -1,35 +1,17 @@
-import adapter from '@sveltejs/adapter-static';
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
-
-const production = process.env.NODE_ENV === 'production';
+import adapter from "@sveltejs/adapter-cloudflare";
+import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	preprocess: vitePreprocess(),
+  preprocess: vitePreprocess({
+    scss: {
+      includePaths: ['theme'],
+    },
+  }),
 
-	kit: {
-		adapter: adapter({
-			pages: "dist",
-			assets: "dist",
-			fallback: undefined,
-			precompress: false,
-			strict: true,
-		}),
-
-		paths: {
-			base: production ? '/misc-org/misc-study' : '',
-		},
-	},
-
-	onwarn: (warning, handler) => {
-		const { code } = warning;
-
-		if (code === "css-unused-selector") {
-			return;
-		}
-
-		handler(warning);
-	},
+  kit: {
+    adapter: adapter(),
+  },
 };
 
 export default config;

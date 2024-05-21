@@ -1,0 +1,306 @@
+@import "svelte-materialify/src/styles/tools/colors";
+@import "svelte-materialify/src/styles/tools/elevation";
+
+.h2 {
+    margin-left: 0;
+}
+
+.h3 {
+    margin-left: 20px;
+}
+
+:global(.filename) {
+    font-family: "M PLUS 1 Code", monospace;
+    width: fit-content;
+    font-size: 0.9em;
+    color: material-color("light-blue", "lighten-5");
+    padding: 0.4em 0.6em;
+    margin-bottom: 0;
+    background-color: material-color("light-blue", "darken-2");
+    border-radius: 0.5em;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+:global(.codeblock-wrap) {
+    padding: 1em;
+    background-color: material-color("blue-grey", "darken-4");
+    border-radius: 0.5em;
+    border: 2px solid material-color("blue-grey", "darken-4");
+    position: relative;
+
+    div {
+        font-size: 0.9em;
+        position: absolute;
+        top: -15px;
+        left: -2px;
+        padding: 0.5em;
+        background-color: material-color("blue-grey", "lighten-5");
+        border-radius: 0.5em;
+        border: 2px solid material-color("blue-grey", "darken-2");
+    }
+
+    :global(.codeblock){
+        width: 100%;
+        margin-top: 1.5em;;
+    }
+
+    :global(.codeblock-header) {
+        width: 100%;
+        position: relative;
+        margin-bottom: 1em;
+
+        :global(.codeblock-language) {
+            color: material-color("blue-grey", "lighten-5");
+            font-size: 0.9em;
+            padding: 0.2em;
+            border: 1px solid material-color("blue-grey", "lighten-5");
+            border-radius: 0.4em;
+        }
+
+        :global(button) {
+            background-color: material-color("blue-grey", "lighten-5");
+            color: material-color("blue-grey", "darken-2");
+            padding: 0.2em;
+            border-radius: 0.2em;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9em;
+            position: absolute;
+            right: 0em;
+            top: 0em;
+        }
+    }
+
+    :global(pre) {
+        padding: 1em;
+        overflow: auto;
+        background-color: material-color("blue-grey", "darken-4");
+
+        :global(code) {
+            color: material-color("blue-grey", "lighten-5");
+            font-family: "M PLUS 1 Code", monospace;
+            line-height: 1.01em;
+
+            @media (max-width: 768px) {
+                font-size: 0.9em;
+            }
+        }
+    }
+}
+
+:global(pre) {
+    padding: 1em;
+    background-color: material-color("blue-grey", "darken-4");
+    border-radius: 0.5em;
+    overflow: auto;
+
+    :global(code) {
+        width: 100%;
+        color: material-color("blue-grey", "lighten-5");
+        font-family: "M PLUS 1 Code", monospace;
+        text-align: left;
+
+        @media (max-width: 768px) {
+            font-size: 0.9em;
+        }
+    }
+}
+
+:global(p) {
+    line-height: 2em;
+    margin: 2em 0;
+
+    @media (max-width: 768px) {
+        font-size: 0.9em;
+    }
+
+    :global(code) {
+        background-color: #f7f7f7;
+        color: #22272e;
+        font-size: 0.9em;
+        padding: 0.2em;
+        margin: 0 0.3em;
+        border-radius: 0.2em;
+        border: 1.5px solid #e1e1e1;
+        font-family: "M PLUS 1 Code", monospace;
+
+        @media (max-width: 768px) {
+            font-size: 0.8em;
+        }
+    }
+
+    :global(svg) {
+        margin: 0 0.3em;
+    }
+}
+
+:global(a) {
+    color: material-color("light-blue", "darken-3");
+    text-decoration: underline;
+}
+
+:global(figure) {
+    margin: 2em 0;
+    text-align: center;
+
+    :global(img) {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+:global(.overlay) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    z-index: 9999;
+    pointer-events: none;
+    transition: background 0.3s;
+}
+
+:global(.overlay.show) {
+    background: rgba(0, 0, 0, 0.2);
+    pointer-events: auto;
+}
+
+.expanded-img {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 90%;
+    max-height: 90%;
+}
+
+:global(h2) {
+    margin: 1em 0;
+    border-bottom: 4px solid material-color("light-blue", "lighten-4");
+
+    @media (max-width: 768px) {
+        font-size: 1.2em;
+    }
+
+    &::before {
+        content: "#";
+        margin-right: 0.5em;
+    }
+}
+
+:global(h3) {
+    margin: 1em 0;
+    border-bottom: 3px solid material-color("light-blue", "lighten-5");
+
+    @media (max-width: 768px) {
+        font-size: 1em;
+    }
+
+    &::before {
+        content: "##";
+        margin-right: 0.5em;
+    }
+}
+
+:global(counter-style unordered-list) {
+    system: cyclic;
+    symbols: "-";
+    suffix: " ";
+}
+:global(ul > li) {
+
+    margin: .5em 0;
+
+    @media (max-width: 768px) {
+        font-size: 0.9em;
+    }
+}
+
+:global(counter-style ordered-list) {
+    system: cyclic;
+    symbols: "1";
+    suffix: ". ";
+}
+
+:global(ol > li) {
+    list-style-type: ordered-list;
+}
+
+:global(ul),
+:global(ol) {
+    list-style-position: inside;
+
+    margin: 1em 0;
+
+    :global(code) {
+        background-color: #f7f7f7;
+        color: #22272e;
+        font-size: 0.9em;
+        padding: 0.2em;
+        margin: 0 0.3em;
+        border-radius: 0.2em;
+        border: 1.5px solid #e1e1e1;
+        font-family: "M PLUS 1 Code", monospace;
+
+        @media (max-width: 768px) {
+            font-size: 0.8em;
+        }
+    }
+
+    :global(svg) {
+        margin: 0 0.3em;
+    }
+}
+
+:global(hr) {
+    border: 2px solid material-color("light-blue", "lighten-4");
+}
+
+:global(blockquote) {
+    border-left: 4px solid material-color("light-blue", "lighten-4");
+    padding: 0.5em 1em;
+    margin: 1em 0;
+    background-color: material-color("light-blue", "lighten-5");
+
+    @media (max-width: 768px) {
+        font-size: 0.9em;
+    }
+
+    :global(p) {
+        margin: 0.5em 0;
+        font-style: italic;
+    }
+}
+
+:global(table) {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+    overflow: auto;
+    table-layout: fixed;
+    word-break: break-all;
+    word-wrap: break-all;
+    display: table;
+
+
+    :global(tr) {
+        width: 100%;
+
+        :global(td),
+        :global(th) {
+            border: 2px solid material-color("light-blue", "lighten-4");
+            padding: 0 0.5em;
+            text-align: left;
+
+            :global(p) {
+                margin: 0.5em 0;
+            }
+        }
+
+        :global(th) {
+            background-color: material-color("light-blue", "lighten-5");
+        }
+    }
+}

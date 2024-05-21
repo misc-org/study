@@ -1,8 +1,8 @@
 import { createClient, type MicroCMSQueries } from "microcms-js-sdk";
-import { MICROCMS_SERVICE_DOMAIN, MICROCMS_API_KEY } from "$env/static/private";
-import blogsDetail from "$lib/assets/mocks/blogs-detail.json";
-import blogsList from "$lib/assets/mocks/blogs-list.json";
 import type { EndPoints } from "$lib/types/microcms";
+
+const MICROCMS_SERVICE_DOMAIN = import.meta.env.VITE_MICROCMS_SERVICE_DOMAIN;
+const MICROCMS_API_KEY = import.meta.env.VITE_MICROCMS_API_KEY;
 
 export const microcms = createClient({
   serviceDomain: MICROCMS_SERVICE_DOMAIN,
@@ -13,6 +13,7 @@ export async function getContentList<T extends keyof EndPoints["gets"]>(
   key: T,
   queries: MicroCMSQueries = {},
 ): Promise<EndPoints["gets"][T]> {
+  /**
   if (process.env.NODE_ENV === "development") {
     switch (key) {
       case "blogs":
@@ -21,6 +22,7 @@ export async function getContentList<T extends keyof EndPoints["gets"]>(
         throw new Error("Invalid key");
     }
   }
+  **/
 
   return microcms.get({
     endpoint: key,
@@ -33,6 +35,7 @@ export async function getContentDetail<T extends keyof EndPoints["get"]>(
   id: string,
   queries: MicroCMSQueries = {},
 ): Promise<EndPoints["get"][T]> {
+  /**
   if (process.env.NODE_ENV === "development") {
     switch (key) {
       case "blogs":
@@ -41,9 +44,23 @@ export async function getContentDetail<T extends keyof EndPoints["get"]>(
         throw new Error("Invalid key");
     }
   }
+  **/
   return microcms.getListDetail<EndPoints["get"][T]>({
     endpoint: key,
     contentId: id,
     queries,
+  });
+}
+
+export async function getDraftContentDetail<T extends keyof EndPoints["get"]>(
+  key: T,
+  id: string,
+  draftKey: string,
+): Promise<EndPoints["get"][T]> {
+
+  return microcms.get<EndPoints["get"][T]>({
+    endpoint: key,
+    contentId: id,
+    queries: { draftKey },
   });
 }
